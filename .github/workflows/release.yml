@@ -55,5 +55,8 @@ jobs:
           name: LabelPlusFX-${{ env.VERSION }}-Win64
           path: ${{ github.workspace }}/script/jpackage/Output/LabelPlusFX-${{ env.VERSION }}-Win64.zip
 
-      - name: 真正伟大的tmate
-        uses: mxschmitt/action-tmate@v3
+      - name: ALL ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: ALLALL
+          path: ${{ github.workspace }}/
