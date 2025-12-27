@@ -118,10 +118,7 @@ class DialogSettings : AbstractPropertiesDialog() {
         children += Text(I18N["settings.tool.fan_hua_ji.description.prefix"])
         children += Hyperlink(I18N["settings.tool.fan_hua_ji.description.link_text"]).apply {
             setOnAction {
-                val desktop = Desktop.getDesktop()
-                if (Desktop.isDesktopSupported() && desktop.isSupported(Desktop.Action.BROWSE)) {
-                    desktop.browse(URI(INFO["fanHuaJi.url"]))
-                }
+                state.application.hostServices.showDocument(INFO["fanHuaJi.url"])
             }
         }
         children += Text(I18N["settings.tool.fan_hua_ji.description.suffix"])

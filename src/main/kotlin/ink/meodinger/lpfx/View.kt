@@ -510,9 +510,7 @@ class View(private val state: State) : BorderPane() {
                 prefWidth = 80.0
                 style = "-fx-text-fill: black; -fx-underline: true;"
                 setOnAction {
-                    if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-                        Desktop.getDesktop().browse(URI(INFO["application.guide"]))
-                    }
+                    state.application.hostServices.showDocument(INFO["application.guide"])
                 }
             }
             add(Separator()) {
@@ -522,9 +520,7 @@ class View(private val state: State) : BorderPane() {
                 prefWidth = 80.0
                 style = "-fx-text-fill: black; -fx-underline: true;"
                 setOnAction {
-                    if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-                        Desktop.getDesktop().browse(URI(INFO["application.guide.shortcut"]))
-                    }
+                    state.application.hostServices.showDocument(INFO["application.guide.shortcut"])
                 }
             }
             add(Separator()) {
