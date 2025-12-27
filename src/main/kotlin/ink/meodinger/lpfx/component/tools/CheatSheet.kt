@@ -63,13 +63,17 @@ class CheatSheet : Stage() {
             add(Hyperlink(I18N["cheat.more_help"]), 0, 11, 2, 1) {
 //                gridHAlign = HPos.CENTER
                 setOnAction {
-                    state.application.hostServices.showDocument(INFO["application.help"])
+                    if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+                        Desktop.getDesktop().browse(URI(INFO["application.help"]))
+                    }
                 }
             }
             add(Hyperlink(I18N["cheat.guide"]), 1, 11, 2, 1) {
 //                gridHAlign = HPos.CENTER
                 setOnAction {
-                    state.application.hostServices.showDocument(INFO["application.guide"])
+                    if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+                        Desktop.getDesktop().browse(URI(INFO["application.guide"]))
+                    }
                 }
             }
         })
