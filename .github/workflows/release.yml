@@ -33,12 +33,12 @@ jobs:
     needs: [extract-version]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
-      - name: Set up JDK 17 (Liberica Full)
+      - name: Set up JDK 21 (Liberica Full)
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'liberica'
           java-package: jdk-full
 
@@ -76,10 +76,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up JDK 17 (Liberica Full)
+      - name: Set up JDK 21 (Liberica Full)
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'liberica'
           java-package: jdk-full
 
@@ -115,10 +115,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up JDK 17 (Liberica Full)
+      - name: Set up JDK 21 (Liberica Full)
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'liberica'
           java-package: jdk-full
 
@@ -174,7 +174,7 @@ jobs:
           cat changelog.md
 
 
-      - name: Create Draft Release
+      - name: Create Release
         uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
