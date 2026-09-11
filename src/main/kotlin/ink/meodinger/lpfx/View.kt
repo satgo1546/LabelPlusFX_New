@@ -29,21 +29,17 @@ import javafx.animation.KeyFrame
 import javafx.animation.KeyValue
 import javafx.animation.Timeline
 import javafx.application.Platform
-import javafx.beans.value.ChangeListener
 import javafx.collections.ListChangeListener
 import javafx.event.ActionEvent
 import javafx.geometry.Insets
 import javafx.geometry.Orientation
 import javafx.scene.control.*
 import javafx.scene.image.ImageView
-import javafx.scene.input.KeyCode
-import javafx.scene.input.KeyCodeCombination
-import javafx.scene.input.KeyCombination
+import javafx.scene.input.*
 import javafx.scene.layout.BorderPane
 import javafx.scene.layout.HBox
 import javafx.scene.layout.Priority
 import javafx.scene.layout.Region
-import javafx.scene.paint.Color
 import javafx.scene.shape.Circle
 import javafx.stage.FileChooser
 import javafx.util.Callback
@@ -309,10 +305,13 @@ class View(private val state: State) : BorderPane() {
                     disableProperty().bind(!state.openedProperty())
                     accelerator = KeyCodeCombination(KeyCode.E, KeyCombination.SHORTCUT_DOWN)
                 }
+                item(I18N["m.lp_current_page"]) {
+                    does { state.controller.exportCurrentPageAsLP() }
+                    disableProperty().bind(!state.openedProperty())
+                }
                 item(I18N["m.meo"]) {
                     does { exportTransFile(FileType.MeoFile) }
                     disableProperty().bind(!state.openedProperty())
-                    accelerator = KeyCodeCombination(KeyCode.E, KeyCombination.SHORTCUT_DOWN, KeyCombination.SHIFT_DOWN)
                 }
                 separator()
                 item(I18N["m.pack"]) {
@@ -452,40 +451,7 @@ class View(private val state: State) : BorderPane() {
                     center(cTreeView) {
                         contextMenu = cTreeMenu
                         disableProperty().bind(!state.openedProperty())
-                        setCellFactory {
-                            object : TreeCell<String>() {
-
-                                private var markListener: ChangeListener<Boolean> = onNew {
-                                    textFill = if (it) Color.RED else Color.BLACK
-                                }
-
-                                init {
-                                    treeItemProperty().addListener { _, oldV, newV ->
-                                        if (oldV is CTreeLabelItem) oldV.transLabel.markedProperty()
-                                            .removeListener(markListener)
-                                        if (newV is CTreeLabelItem) newV.transLabel.markedProperty()
-                                            .addListener(markListener)
-                                    }
-                                }
-
-                                override fun updateItem(item: String?, empty: Boolean) {
-                                    super.updateItem(item, empty)
-                                    textFill = Color.BLACK
-
-                                    val actualItem = treeItem
-                                    if (item != null && !empty) {
-                                        text = item
-                                        graphic = actualItem.graphic
-                                        if (actualItem is CTreeLabelItem && actualItem.transLabel.isMarked) {
-                                            textFill = Color.RED
-                                        }
-                                    } else {
-                                        text = emptyString()
-                                        graphic = null
-                                    }
-                                }
-                            }
-                        }
+                        installCellFactory(state, cLabelPane)
                     }
                 }
                 add(TitledPane()) {
